@@ -1,1 +1,29 @@
 
+<!DOCTYPE html>
+<html>
+<head><title>CnBees Dashboard</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial;background:#f5f3f3;color:#17213b}.layout{display:flex;min-height:100vh}.side{width:250px;background:#fff0c4;padding:25px;text-align:center;display:flex;flex-direction:column;justify-content:space-between}.bee{font-size:65px}.side h1{font-size:34px}.side h3{color:#a87900}main{flex:1;padding:30px}.card{background:white;padding:22px;border-radius:20px;margin-bottom:22px;box-shadow:0 4px 15px #ddd}.inputs,.results{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.results{grid-template-columns:repeat(3,1fr)}input{width:100%;padding:13px;border:1px solid #ddd;border-radius:9px;margin-top:10px}button{background:#ffbf20;border:0;padding:15px 35px;border-radius:12px;font-weight:bold;cursor:pointer;margin-top:15px}.result{background:#fafafa;padding:18px;border-radius:15px}.result h2{font-size:25px}.recommend{background:#fff0c4;padding:20px;border-radius:15px;margin-top:15px}progress{width:100%;height:14px} @media(max-width:750px){.side{width:110px;padding:10px}.inputs,.results{grid-template-columns:1fr 1fr}main{padding:12px}}
+</style></head>
+<body><div class="layout">
+<aside class="side"><div><div class="bee">🐝</div><h1>CnBees</h1><h3>Smart Risk Detection</h3><h2>Monitor.<br>Analyse.<br>Réussissez.</h2></div><div style="font-size:55px">🚀</div></aside>
+<main>
+<div class="card"><h2>📊 Informations de la campagne</h2><div class="inputs">
+<label>🎯 Objectif (DT)<input id="o" type="number" value="20000"></label>
+<label>🪙 Montant collecté<input id="m" type="number" value="5000"></label>
+<label>📅 Durée totale<input id="d" type="number" value="30"></label>
+<label>✅ Jours écoulés<input id="j" type="number" value="10"></label>
+</div><center><button onclick="analyser()">🔍 Analyser la campagne</button></center></div>
+<div class="card"><h2>📈 Résultats de l'analyse</h2><div class="results" id="results"></div><div class="recommend" id="advice">💡 <b>Recommandation</b><p>Augmenter la publicité pour attirer plus de contributeurs.</p></div></div>
+</main></div>
+<script>
+function analyser(){
+let o=+document.getElementById("o").value,m=+document.getElementById("m").value,d=+document.getElementById("d").value,j=+document.getElementById("j").value;
+if(!o||m<0||!d||j<0||j>d||!document.getElementById("m").value)return alert("Vérifiez les données");
+let p=m/o*100,v=m/Math.max(j,1),pre=v*d,ratio=m/(o*j/d||1),r=m>=o?"Objectif atteint":ratio>=.9?"Faible":ratio>=.6?"Moyen":"Élevé",c=r=="Élevé"?"Augmenter la publicité":r=="Moyen"?"Attirer plus de contributeurs":"Continuer la stratégie";
+document.getElementById("results").innerHTML="<div class='result'>Progression<h2>"+p.toFixed(1)+"%</h2><progress value='"+Math.min(p,100)+"' max='100'></progress></div><div class='result'>📅 Jours restants<h2>"+(d-j)+" jours</h2></div><div class='result'>🪙 Moyenne / jour<h2>"+v.toFixed(0)+" DT</h2></div><div class='result'>🎯 Prévision finale<h2>"+pre.toFixed(0)+" DT</h2></div><div class='result'>⚠️ Risque<h2>"+r+"</h2></div><div class='result'>🔔 Alerte<h3>"+(r=="Élevé"?"Campagne en difficulté":r=="Moyen"?"Surveillance nécessaire":"Situation favorable")+"</h3></div>";
+document.getElementById("advice").innerHTML="💡 <b>Recommandation</b><p>"+c+"</p>";
+}
+analyser();
+</script></body></html>
+
